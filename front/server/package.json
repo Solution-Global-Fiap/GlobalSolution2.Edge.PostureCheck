@@ -1,0 +1,28 @@
+{
+  "name": "sprint-4-edge-passa-a-bola",
+  "version": "1.0.0",
+  "description": "Entrega da Sprint 4 da matéria de Edge computing",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaviMunhoz1005/Sprint-4-Edge-Passa-A-Bola.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DaviMunhoz1005/Sprint-4-Edge-Passa-A-Bola/issues"
+  },
+  "homepage": "https://github.com/DaviMunhoz1005/Sprint-4-Edge-Passa-A-Bola#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mqtt": "^5.14.1",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {}
+}
