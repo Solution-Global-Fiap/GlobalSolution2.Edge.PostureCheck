@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posture Buddy - Your Sitting Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-10px) rotate(-5deg); }
+            75% { transform: translateX(10px) rotate(5deg); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.1); }
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .buddy {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .buddy.happy {
+            animation: bounce 0.6s ease-in-out infinite;
+        }
+
+        .buddy.sad {
+            animation: shake 0.5s ease-in-out infinite;
+            filter: grayscale(30%);
+        }
+
+        .buddy.worried {
+            animation: float 1s ease-in-out infinite;
+        }
+
+        .particle {
+            animation: rise 2s ease-out forwards;
+        }
+
+        .health-fill {
+            transition: width 1s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-4 font-sans">
+    <div class="bg-white rounded-3xl p-6 shadow-2xl max-w-md w-full border-8 border-gray-800">
+        <!-- Screen -->
+        <div class="bg-cyan-50 rounded-2xl p-6 text-center border-4 border-gray-800 relative overflow-hidden">
+            <!-- Connection Status -->
+            <div id="connectionStatus" class="absolute top-3 right-3 w-3 h-3 rounded-full bg-gray-300 transition-all"></div>
+            
+            <!-- Header -->
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Posture Buddy</h1>
+            
+            <!-- Buddy Container -->
+            <div class="relative h-64 my-6">
+                <!-- Particles -->
+                <div id="particles" class="absolute inset-0 pointer-events-none"></div>
+                
+                <!-- Buddy Character -->
+                <div id="buddy" class="buddy text-8xl inline-block transition-all duration-500">
+                    😊
+                </div>
+            </div>
+            
+            <!-- Status Messages -->
+            <div id="statusText" class="text-2xl font-bold text-gray-800 mb-2 min-h-8">
+                Waiting for data...
+            </div>
+            <div id="moodMessage" class="text-base text-gray-600 mb-6 min-h-12 leading-relaxed px-4">
+                Connect your posture monitor!
+            </div>
+            
+            <!-- Health Bar -->
+            <div class="w-full h-8 bg-gray-300 rounded-full overflow-hidden border-3 border-gray-800 mb-6 relative">
+                <div id="healthBar" class="health-fill h-full bg-gradient-to-r from-green-500 to-green-400 flex items-center justify-center text-white font-bold text-sm">
+                    100%
+                </div>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div class="bg-white p-4 rounded-xl border-3 border-gray-800">
+                    <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">Good Posture</div>
+                    <div id="goodTime" class="text-2xl font-bold text-gray-800">0m</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border-3 border-gray-800">
+                    <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">Bad Posture</div>
+                    <div id="badTime" class="text-2xl font-bold text-gray-800">0m</div>
+                </div>
+            </div>
+            
+            <!-- Session Time -->
+            <div id="sessionTime" class="text-sm text-gray-500 mt-3">
+                Session: 0m
+            </div>
+        </div>
+    </div>
+</body>
+</html>
